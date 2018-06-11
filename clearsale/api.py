@@ -6,14 +6,12 @@ from .responses import OrderStatusResponse, SendOrdersResponse
 class ClearSaleConnector():
     def __init__(self, entity_code, use_sandbox=True, **extra_params_connection):
         self._entity_code = entity_code
-        ws_url = "https://homologacao.clearsale.com.br/integracaov2/service.asmx?wsdl" if use_sandbox \
+        self._extra_params_connection = extra_params_connection
+        self._ws_url = "https://homologacao.clearsale.com.br/integracaov2/service.asmx?wsdl" if use_sandbox \
             else "https://www.clearsale.com.br/integracaov2/service.asmx?wsdl"
-        # print "====== extra_params_connection ======"
-        # print extra_params_connection
-        self._ws_client = Client(ws_url, **extra_params_connection)
 
     def get_ws_client(self):
-        return self._ws_client
+        return Client(self._ws_url, **self._extra_params_connection)
 
     def get_entity_code(self):
         return self._entity_code
