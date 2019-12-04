@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 from xml.dom.minidom import parseString
 
@@ -10,18 +9,16 @@ class BaseEntity(object):
         """
         xml = ""
         for key in root.keys():
-            # print "=========="
-            # print key
             if isinstance(root[key], dict):
-                xml = u"{}<{}>{}</{}>".format(xml, key, self.serialize(root[key]), key)
+                xml = "{}<{}>{}</{}>".format(xml, key, self.serialize(root[key]), key)
             elif isinstance(root[key], list):
-                xml = u"{}<{}>".format(xml, key)
+                xml = "{}<{}>".format(xml, key)
                 for item in root[key]:
-                    xml = u"{}{}".format(xml, self.serialize(item))
-                xml = u"{}</{}>".format(xml, key)
+                    xml = "{}{}".format(xml, self.serialize(item))
+                xml = "{}</{}>".format(xml, key)
             else:
                 value = root[key]
-                xml = u"{}<{}>{}</{}>".format(xml, key, value, key)
+                xml = "{}<{}>{}</{}>".format(xml, key, value, key)
         return xml
 
     def get_data(self):
@@ -29,13 +26,6 @@ class BaseEntity(object):
 
     def get_dict(self):
         data_temp = self._data
-        # for k in self._data:
-        #     if isinstance(data_temp[k], list):
-        #         for i, item in enumerate(data_temp[k]):
-        #             if isinstance(item, BaseEntity):
-        #                 data_temp[k][i] = item.get_dict()
-        #     elif isinstance(data_temp[k], BaseEntity):
-        #         data_temp[k] = data_temp[k].get_dict()
         return data_temp
 
     def get_pretty_dict(self):
@@ -45,14 +35,7 @@ class BaseEntity(object):
         return None
 
     def get_xml(self):
-        # root = self.get_xml_root()
-        # params = {"root": False,
-        #           "attr_type": False}
-
-        # xml = dicttoxml.dicttoxml(self.get_dict(), **params)
         xml = self.serialize(self.get_dict())
-        # if root is not None:
-        #     xml = "<{0}>{1}</{0}>".format(root, xml)
         return xml
 
     def get_pretty_xml(self):
@@ -74,10 +57,7 @@ class BaseEntity(object):
                 data_temp = self._data
 
             for field in self.get_no_mandatory_fields():
-                # print field
                 value = extra_fields[field]
-                # print value
-                # print "======================="
                 if value is not None:
                     data_temp[field] = value
 
