@@ -26,3 +26,8 @@ SEND_ORDERS_RESPONSE_XML = """
     </PackageStatus>
 </ClearSale>
 """
+
+
+class OrderMock:
+    def get_xml(self):
+        return "content"
