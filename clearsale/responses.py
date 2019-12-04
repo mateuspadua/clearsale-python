@@ -232,33 +232,8 @@ class BaseResponse:
 
 
 class OrderStatusResponse(BaseResponse):
-    """
-    <ClearSale>
-        <Orders>
-            <Order>
-                <ID>TEST-AA11</ID>
-                <Status>AMA</Status>
-                <Score>22.8200</Score>
-            </Order>
-        </Orders>
-    </ClearSale>
-    """
+    pass
 
 
 class SendOrdersResponse(BaseResponse):
-    """
-    <ClearSale>
-        <PackageStatus>
-            <TransactionID></TransactionID>
-            <StatusCode></StatusCode>
-            <Message></Message>
-            <Orders>
-                <Order>
-                    <ID></ID>
-                    <Status></Status>
-                    <Score></Score>
-                </Order>
-            </Orders>
-        </PackageStatus>
-    </ClearSale>
-    """
+    pass
