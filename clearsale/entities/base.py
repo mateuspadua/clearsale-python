@@ -4,25 +4,24 @@ from xml.dom.minidom import parseString
 
 
 class BaseEntity(object):
-
     def serialize(self, root):
         """
         http://www.madchicken.it/2010/06/serialize-a-python-dictionary-to-xml.html
         """
-        xml = ''
+        xml = ""
         for key in root.keys():
             # print "=========="
             # print key
             if isinstance(root[key], dict):
-                xml = u'{}<{}>{}</{}>'.format(xml, key, self.serialize(root[key]), key)
+                xml = u"{}<{}>{}</{}>".format(xml, key, self.serialize(root[key]), key)
             elif isinstance(root[key], list):
-                xml = u'{}<{}>'.format(xml, key)
+                xml = u"{}<{}>".format(xml, key)
                 for item in root[key]:
-                    xml = u'{}{}'.format(xml, self.serialize(item))
-                xml = u'{}</{}>'.format(xml, key)
+                    xml = u"{}{}".format(xml, self.serialize(item))
+                xml = u"{}</{}>".format(xml, key)
             else:
                 value = root[key]
-                xml = u'{}<{}>{}</{}>'.format(xml, key, value, key)
+                xml = u"{}<{}>{}</{}>".format(xml, key, value, key)
         return xml
 
     def get_data(self):
@@ -133,21 +132,21 @@ class BaseCustomer(BaseEntity):
     TYPE_PESSOA_FISICA = 1
     TYPE_PESSOA_JURIDICA = 2
 
-    GENDER_MASCULINO = 'M'
-    GENDER_FEMININO = 'F'
+    GENDER_MASCULINO = "M"
+    GENDER_FEMININO = "F"
 
     def __init__(
-                    self,
-                    ID,
-                    Type,
-                    LegalDocument1,
-                    Name,
-                    Address,
-                    BirthDate=None,
-                    LegalDocument2=None,
-                    Email=None,
-                    Gender=None
-                ):
+        self,
+        ID,
+        Type,
+        LegalDocument1,
+        Name,
+        Address,
+        BirthDate=None,
+        LegalDocument2=None,
+        Email=None,
+        Gender=None,
+    ):
         self._data = {
             "ID": ID,
             "Type": Type,
@@ -161,9 +160,7 @@ class BaseCustomer(BaseEntity):
         self.set_no_mandatory_fields_values(locals())
 
     def get_no_mandatory_fields(self):
-        return (
-            "LegalDocument2", "Email", "Gender", "BirthDate"
-        )
+        return ("LegalDocument2", "Email", "Gender", "BirthDate")
 
     def add_phone(self, Phone):
         self._data[self._data.keys()[0]]["Phones"].append(Phone.get_dict())

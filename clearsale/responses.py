@@ -1,35 +1,36 @@
 # -*- coding: utf-8 -*-
-import xmltodict
 from xml.dom.minidom import parseString
 
+import xmltodict
 
-class OrderReturn():
+
+class OrderReturn:
     # Pedido foi aprovado automaticamente segundo parâmetros definidos na regra de aprovação automática.
-    STATUS_SAIDA_APROVACAO_AUTOMATICA = 'APA'
+    STATUS_SAIDA_APROVACAO_AUTOMATICA = "APA"
     # Pedido aprovado manualmente por tomada de decisão de um analista.
-    STATUS_SAIDA_APROVACAO_MANUAL = 'APM'
+    STATUS_SAIDA_APROVACAO_MANUAL = "APM"
     # Pedido Reprovado sem Suspeita por falta de contato com o cliente dentro do período acordado e/ou políticas restritivas de CPF (Irregular, SUS ou Cancelados).
-    STATUS_SAIDA_REPROVADA_SEM_SUSPEITA = 'RPM'
+    STATUS_SAIDA_REPROVADA_SEM_SUSPEITA = "RPM"
     # Pedido está em fila para análise
-    STATUS_SAIDA_ANALISE_MANUAL = 'AMA'
+    STATUS_SAIDA_ANALISE_MANUAL = "AMA"
     # Ocorreu um erro na integração do pedido, sendo necessário analisar um possível erro no XML enviado e após a correção reenvia-lo.
-    STATUS_SAIDA_ERRO = 'ERR'
+    STATUS_SAIDA_ERRO = "ERR"
     # Pedido importado e não classificado Score pela analisadora (processo que roda o Score de cada pedido).
-    STATUS_SAIDA_NOVO = 'NVO'
+    STATUS_SAIDA_NOVO = "NVO"
     # Pedido Suspenso por suspeita de fraude baseado no contato com o “cliente” ou ainda na base ClearSale.
-    STATUS_SAIDA_SUSPENSAO_MANUAL = 'SUS'
+    STATUS_SAIDA_SUSPENSAO_MANUAL = "SUS"
     # Cancelado por solicitação do cliente ou duplicidade do pedido.
-    STATUS_SAIDA_CANCELADO_PELO_CLIENTE = 'CAN'
+    STATUS_SAIDA_CANCELADO_PELO_CLIENTE = "CAN"
     # Pedido imputado como Fraude Confirmada por contato com a administradora de cartão e/ou contato com titular do cartão ou CPF do cadastro que desconhecem a compra.
-    STATUS_SAIDA_FRAUDE_CONFIRMADA = 'FRD'
+    STATUS_SAIDA_FRAUDE_CONFIRMADA = "FRD"
     # Pedido Reprovado Automaticamente por algum tipo de Regra de Negócio que necessite aplicá-la (Obs: não usual e não recomendado).
-    STATUS_SAIDA_REPROVACAO_AUTOMATICA = 'RPA'
+    STATUS_SAIDA_REPROVACAO_AUTOMATICA = "RPA"
     # Pedido reprovado automaticamente por política estabelecida pelo cliente ou ClearSale.
-    STATUS_SAIDA_REPROVACAO_POR_POLITICA = 'RPP'
+    STATUS_SAIDA_REPROVACAO_POR_POLITICA = "RPP"
 
     STATUS_APPROVED_LIST = (
         STATUS_SAIDA_APROVACAO_AUTOMATICA,
-        STATUS_SAIDA_APROVACAO_MANUAL
+        STATUS_SAIDA_APROVACAO_MANUAL,
     )
 
     STATUS_NOT_APPROVED_LIST = (
@@ -46,9 +47,7 @@ class OrderReturn():
         STATUS_SAIDA_NOVO,
     )
 
-    STATUS_ERROS_LIST = (
-        STATUS_SAIDA_ERRO,
-    )
+    STATUS_ERROS_LIST = (STATUS_SAIDA_ERRO,)
 
     STATUS_LABEL = {
         STATUS_SAIDA_APROVACAO_AUTOMATICA: u"(Aprovação Automática) – Pedido foi aprovado automaticamente segundo parâmetros definidos na regra de aprovação automática.",
@@ -70,10 +69,10 @@ class OrderReturn():
     ERRO = 4
 
     STATUS = {}
-    STATUS[APROVADO] = u'Aprovado'
-    STATUS[AGUARDANDO_APROVACAO] = u'Aguardando aprovação'
-    STATUS[REPROVADO] = u'Reprovado'
-    STATUS[ERRO] = u'Erro'
+    STATUS[APROVADO] = u"Aprovado"
+    STATUS[AGUARDANDO_APROVACAO] = u"Aguardando aprovação"
+    STATUS[REPROVADO] = u"Reprovado"
+    STATUS[ERRO] = u"Erro"
 
     def __init__(self, id, status, score, *args, **kwargs):
         self._id = id
@@ -118,15 +117,15 @@ class OrderReturn():
         return self.STATUS_LABEL[self._status]
 
 
-class BaseResponse():
-    STATUS_CODE_TRANSACAO_CONCLUIDA = '00'
-    STATUS_CODE_USUARIO_INEXISTENTE = '01'
-    STATUS_CODE_ERRO_VALIDACAO_XML = '02'
-    STATUS_CODE_ERRO_TRANFORMACAO_XML = '03'
-    STATUS_CODE_ERRO_INESPERADO = '04'
-    STATUS_CODE_PEDIDO_JA_ENVIADO_OU_NAO_ESTA_EM_REANALISE = '05'
-    STATUS_CODE_ERRO_PLUGIN_ENTRADA = '06'
-    STATUS_CODE_ERRO_PLUGIN_SAIDA = '07'
+class BaseResponse:
+    STATUS_CODE_TRANSACAO_CONCLUIDA = "00"
+    STATUS_CODE_USUARIO_INEXISTENTE = "01"
+    STATUS_CODE_ERRO_VALIDACAO_XML = "02"
+    STATUS_CODE_ERRO_TRANFORMACAO_XML = "03"
+    STATUS_CODE_ERRO_INESPERADO = "04"
+    STATUS_CODE_PEDIDO_JA_ENVIADO_OU_NAO_ESTA_EM_REANALISE = "05"
+    STATUS_CODE_ERRO_PLUGIN_ENTRADA = "06"
+    STATUS_CODE_ERRO_PLUGIN_SAIDA = "07"
 
     def __init__(self, xml, *args, **kwargs):
         self._dict = self._parse_xml_to_dict(xml)
@@ -141,7 +140,11 @@ class BaseResponse():
         # print self.__class__.__name__
         # print self._xml
 
-        root_node = self._dict["ClearSale"] if "ClearSale" in self._dict else self._dict["PackageStatus"]
+        root_node = (
+            self._dict["ClearSale"]
+            if "ClearSale" in self._dict
+            else self._dict["PackageStatus"]
+        )
 
         self._orders = []
         if "Orders" in root_node:
@@ -149,10 +152,14 @@ class BaseResponse():
             if isinstance(orders, list):
                 for o in orders:
                     if "ID" in o:
-                        self._orders.append(OrderReturn(o["ID"], o["Status"], o["Score"]))
+                        self._orders.append(
+                            OrderReturn(o["ID"], o["Status"], o["Score"])
+                        )
             else:
                 if "ID" in orders:
-                    self._orders.append(OrderReturn(orders["ID"], orders["Status"], orders["Score"]))
+                    self._orders.append(
+                        OrderReturn(orders["ID"], orders["Status"], orders["Score"])
+                    )
 
         if "StatusCode" in root_node:
             self._transaction_id = root_node["TransactionID"]

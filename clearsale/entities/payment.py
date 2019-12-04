@@ -86,25 +86,25 @@ class Payment(BaseEntity):
     )
 
     def __init__(
-                    self,
-                    Date,
-                    Amount,
-                    PaymentTypeID,
-                    Address=None,
-                    Sequential=None,
-                    QtyInstallments=None,
-                    Interest=None,
-                    InterestValue=None,
-                    CardNumber=None,
-                    CardBin=None,
-                    CardEndNumber=None,
-                    CardType=None,
-                    CardExpirationDate=None,
-                    Name=None,
-                    LegalDocument=None,
-                    Nsu=None,
-                    Currency=None,
-                ):
+        self,
+        Date,
+        Amount,
+        PaymentTypeID,
+        Address=None,
+        Sequential=None,
+        QtyInstallments=None,
+        Interest=None,
+        InterestValue=None,
+        CardNumber=None,
+        CardBin=None,
+        CardEndNumber=None,
+        CardType=None,
+        CardExpirationDate=None,
+        Name=None,
+        LegalDocument=None,
+        Nsu=None,
+        Currency=None,
+    ):
         self._data = {}
         self._data["Payment"] = {
             "Date": Date,
@@ -119,7 +119,17 @@ class Payment(BaseEntity):
 
     def get_no_mandatory_fields(self):
         return (
-            "Sequential", "QtyInstallments", "Interest", "InterestValue",
-            "CardNumber", "CardBin", "CardEndNumber", "CardType",
-            "CardExpirationDate", "Name", "LegalDocument", "Nsu", "Currency"
+            "Sequential",
+            "QtyInstallments",
+            "Interest",
+            "InterestValue",
+            "CardNumber",
+            "CardBin",
+            "CardEndNumber",
+            "CardType",
+            "CardExpirationDate",
+            "Name",
+            "LegalDocument",
+            "Nsu",
+            "Currency",
         )
