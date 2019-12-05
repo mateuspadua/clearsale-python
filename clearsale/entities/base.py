@@ -51,6 +51,7 @@ class BaseEntity(object):
 
         keys = self._data.keys()
         if keys:
+            keys = list(keys)
             if isinstance(self._data[keys[0]], dict):
                 data_temp = self._data[keys[0]]
             else:
@@ -143,4 +144,4 @@ class BaseCustomer(BaseEntity):
         return ("LegalDocument2", "Email", "Gender", "BirthDate")
 
     def add_phone(self, Phone):
-        self._data[self._data.keys()[0]]["Phones"].append(Phone.get_dict())
+        self._data[list(self._data.keys())[0]]["Phones"].append(Phone.get_dict())
