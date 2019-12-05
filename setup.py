@@ -8,7 +8,7 @@ setup(
     license="MIT License",
     name="clearsale-python",
     packages=find_packages(),
-    python_requires=">=3.8.0",
+    python_requires=">=3.7.0",
     url="https://github.com/mateuspadua/clearsale-python",
     version="1.4.0",
     zip_safe=False,
