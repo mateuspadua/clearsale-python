@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .base import BaseEntity
 
 
@@ -91,11 +90,11 @@ class Order(BaseEntity):
         </Order>
     """
 
-    DATE_TIME_FORMAT = 'Y-m-d\TH:i:s'
+    DATE_TIME_FORMAT = "Y-m-d\TH:i:s"
 
     # B2B_B2C
-    ECOMMERCE_B2B = 'b2b'
-    ECOMMERCE_B2C = 'b2c'
+    ECOMMERCE_B2B = "b2b"
+    ECOMMERCE_B2C = "b2c"
 
     # Status
     STATUS_NOVO = 0
@@ -125,35 +124,35 @@ class Order(BaseEntity):
     LIST_TYPE_CHA_BAR_OU_CHA_PANELA = 6
 
     def __init__(
-                    self,
-                    ID,
-                    FingerPrint,
-                    Date,
-                    Email,
-                    TotalItems,
-                    TotalOrder,
-                    QtyInstallments,
-                    IP,
-                    BillingData,
-                    ShippingData,
-                    Origin=None,
-                    ListTypeID=None,
-                    ListID=None,
-                    Status=None,
-                    B2B_B2C=None,
-                    ShippingPrice=None,
-                    DeliveryTimeCD=None,
-                    QtyItems=None,
-                    QtyPaymentTypes=None,
-                    ShippingType=None,
-                    Gift=None,
-                    GiftMessage=None,
-                    Obs=None,
-                    Reanalise=None,
-                    Country=None,
-                    Nationality=None,
-                    Product=None,
-                ):
+        self,
+        ID,
+        FingerPrint,
+        Date,
+        Email,
+        TotalItems,
+        TotalOrder,
+        QtyInstallments,
+        IP,
+        BillingData,
+        ShippingData,
+        Origin=None,
+        ListTypeID=None,
+        ListID=None,
+        Status=None,
+        B2B_B2C=None,
+        ShippingPrice=None,
+        DeliveryTimeCD=None,
+        QtyItems=None,
+        QtyPaymentTypes=None,
+        ShippingType=None,
+        Gift=None,
+        GiftMessage=None,
+        Obs=None,
+        Reanalise=None,
+        Country=None,
+        Nationality=None,
+        Product=None,
+    ):
 
         self._data = {}
         self._data["Order"] = {
@@ -177,9 +176,22 @@ class Order(BaseEntity):
 
     def get_no_mandatory_fields(self):
         return (
-            "B2B_B2C", "ShippingPrice", "DeliveryTimeCD", "QtyItems", "QtyPaymentTypes",
-            "ShippingType", "Gift", "GiftMessage", "Obs", "Reanalise", "Country",
-            "Nationality", "Product", "Status", "ListTypeID", "ListID",
+            "B2B_B2C",
+            "ShippingPrice",
+            "DeliveryTimeCD",
+            "QtyItems",
+            "QtyPaymentTypes",
+            "ShippingType",
+            "Gift",
+            "GiftMessage",
+            "Obs",
+            "Reanalise",
+            "Country",
+            "Nationality",
+            "Product",
+            "Status",
+            "ListTypeID",
+            "ListID",
         )
 
     def add_payment(self, Payment):

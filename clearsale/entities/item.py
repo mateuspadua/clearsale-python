@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .base import BaseEntity
 
 
@@ -27,26 +26,17 @@ class Item(BaseEntity):
     """
 
     def __init__(
-                    self,
-                    ID,
-                    Name,
-                    ItemValue,
-                    Qty,
-                    Gift=None,
-                    CategoryID=None,
-                    CategoryName=None
-                ):
+        self, ID, Name, ItemValue, Qty, Gift=None, CategoryID=None, CategoryName=None
+    ):
         self._data = {}
         self._data["Item"] = {
             "ID": ID,
             "Name": Name,
             "ItemValue": ItemValue,
-            "Qty": Qty
+            "Qty": Qty,
         }
 
         self.set_no_mandatory_fields_values(locals())
 
     def get_no_mandatory_fields(self):
-        return (
-            "Gift", "CategoryID", "CategoryName"
-        )
+        return ("Gift", "CategoryID", "CategoryName")

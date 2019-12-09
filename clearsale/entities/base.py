@@ -1,28 +1,24 @@
-# -*- coding: utf-8 -*-
 import json
 from xml.dom.minidom import parseString
 
 
 class BaseEntity(object):
-
     def serialize(self, root):
         """
         http://www.madchicken.it/2010/06/serialize-a-python-dictionary-to-xml.html
         """
-        xml = ''
+        xml = ""
         for key in root.keys():
-            # print "=========="
-            # print key
             if isinstance(root[key], dict):
-                xml = u'{}<{}>{}</{}>'.format(xml, key, self.serialize(root[key]), key)
+                xml = "{}<{}>{}</{}>".format(xml, key, self.serialize(root[key]), key)
             elif isinstance(root[key], list):
-                xml = u'{}<{}>'.format(xml, key)
+                xml = "{}<{}>".format(xml, key)
                 for item in root[key]:
-                    xml = u'{}{}'.format(xml, self.serialize(item))
-                xml = u'{}</{}>'.format(xml, key)
+                    xml = "{}{}".format(xml, self.serialize(item))
+                xml = "{}</{}>".format(xml, key)
             else:
                 value = root[key]
-                xml = u'{}<{}>{}</{}>'.format(xml, key, value, key)
+                xml = "{}<{}>{}</{}>".format(xml, key, value, key)
         return xml
 
     def get_data(self):
@@ -30,13 +26,6 @@ class BaseEntity(object):
 
     def get_dict(self):
         data_temp = self._data
-        # for k in self._data:
-        #     if isinstance(data_temp[k], list):
-        #         for i, item in enumerate(data_temp[k]):
-        #             if isinstance(item, BaseEntity):
-        #                 data_temp[k][i] = item.get_dict()
-        #     elif isinstance(data_temp[k], BaseEntity):
-        #         data_temp[k] = data_temp[k].get_dict()
         return data_temp
 
     def get_pretty_dict(self):
@@ -46,14 +35,7 @@ class BaseEntity(object):
         return None
 
     def get_xml(self):
-        # root = self.get_xml_root()
-        # params = {"root": False,
-        #           "attr_type": False}
-
-        # xml = dicttoxml.dicttoxml(self.get_dict(), **params)
         xml = self.serialize(self.get_dict())
-        # if root is not None:
-        #     xml = "<{0}>{1}</{0}>".format(root, xml)
         return xml
 
     def get_pretty_xml(self):
@@ -69,16 +51,14 @@ class BaseEntity(object):
 
         keys = self._data.keys()
         if keys:
+            keys = list(keys)
             if isinstance(self._data[keys[0]], dict):
                 data_temp = self._data[keys[0]]
             else:
                 data_temp = self._data
 
             for field in self.get_no_mandatory_fields():
-                # print field
                 value = extra_fields[field]
-                # print value
-                # print "======================="
                 if value is not None:
                     data_temp[field] = value
 
@@ -133,21 +113,21 @@ class BaseCustomer(BaseEntity):
     TYPE_PESSOA_FISICA = 1
     TYPE_PESSOA_JURIDICA = 2
 
-    GENDER_MASCULINO = 'M'
-    GENDER_FEMININO = 'F'
+    GENDER_MASCULINO = "M"
+    GENDER_FEMININO = "F"
 
     def __init__(
-                    self,
-                    ID,
-                    Type,
-                    LegalDocument1,
-                    Name,
-                    Address,
-                    BirthDate=None,
-                    LegalDocument2=None,
-                    Email=None,
-                    Gender=None
-                ):
+        self,
+        ID,
+        Type,
+        LegalDocument1,
+        Name,
+        Address,
+        BirthDate=None,
+        LegalDocument2=None,
+        Email=None,
+        Gender=None,
+    ):
         self._data = {
             "ID": ID,
             "Type": Type,
@@ -161,9 +141,7 @@ class BaseCustomer(BaseEntity):
         self.set_no_mandatory_fields_values(locals())
 
     def get_no_mandatory_fields(self):
-        return (
-            "LegalDocument2", "Email", "Gender", "BirthDate"
-        )
+        return ("LegalDocument2", "Email", "Gender", "BirthDate")
 
     def add_phone(self, Phone):
-        self._data[self._data.keys()[0]]["Phones"].append(Phone.get_dict())
+        self._data[list(self._data.keys())[0]]["Phones"].append(Phone.get_dict())

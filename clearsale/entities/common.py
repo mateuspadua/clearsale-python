@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .base import BaseEntity
 
 
@@ -45,18 +44,19 @@ class Address(BaseEntity):
             <Reference></Reference>
         </Address>
     """
+
     def __init__(
-                    self,
-                    Street,
-                    Number,
-                    County,
-                    City,
-                    State,
-                    ZipCode,
-                    Country=None,
-                    Comp=None,
-                    Reference=None
-                ):
+        self,
+        Street,
+        Number,
+        County,
+        City,
+        State,
+        ZipCode,
+        Country=None,
+        Comp=None,
+        Reference=None,
+    ):
         self._data = {}
         self._data["Address"] = {
             "Street": Street,
@@ -70,9 +70,7 @@ class Address(BaseEntity):
         self.set_no_mandatory_fields_values(locals())
 
     def get_no_mandatory_fields(self):
-        return (
-            "Country", "Comp", "Reference"
-        )
+        return ("Country", "Comp", "Reference")
 
 
 class Phone(BaseEntity):
@@ -123,6 +121,4 @@ class Phone(BaseEntity):
         self.set_no_mandatory_fields_values(locals())
 
     def get_no_mandatory_fields(self):
-        return (
-            "DDI", "Extension"
-        )
+        return ("DDI", "Extension")
