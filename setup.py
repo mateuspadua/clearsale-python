@@ -15,7 +15,7 @@ CLASSIFIERS = [
 ]
 
 install_requires = [
-    'suds==0.4',
+    'suds==1.0.0',
     'xmltodict==0.9.2'
 ]
 
